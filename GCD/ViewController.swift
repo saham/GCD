@@ -2,6 +2,12 @@ import UIKit
 import BigInt // For big integers
 class ViewController: UIViewController {
     var workItem: DispatchWorkItem?
+    lazy var dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm:ss.SSS "
+        return formatter
+    }()
+
     @IBOutlet weak var calculateButton: UIButton!
     @IBOutlet weak var answerTextView: UITextView!
     @IBAction func calculate(_ sender: UIButton) {
@@ -27,13 +33,12 @@ class ViewController: UIViewController {
         answerTextView.text = ""
     }
     func LongRunningFunction() -> BigInt {
-        return (1 ... BigInt(5555)).map { BigInt($0) }.reduce(BigInt(1), *)
+        return (1 ... BigInt(7777)).map { BigInt($0) }.reduce(BigInt(1), *)
     }
     func UpdateUI(result: BigInt) {
-        print(result)
+        print(dateFormatter.string(from: Date()))
         self.calculateButton.isEnabled = true
         self.answerTextView.text = "\(result)"
+        print(dateFormatter.string(from: Date()))
     }
-}
-
-
+}   
