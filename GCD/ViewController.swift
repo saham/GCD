@@ -6,6 +6,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var answerTextView: UITextView!
     @IBAction func calculate(_ sender: UIButton) {
         var result:BigInt = BigInt(1)
+        answerTextView.text = ""
         calculateButton.isEnabled = false
         let newWorkItem = DispatchWorkItem {
             self.workItem?.cancel()
@@ -23,6 +24,7 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        answerTextView.text = ""
     }
     func LongRunningFunction() -> BigInt {
         return (1 ... BigInt(5555)).map { BigInt($0) }.reduce(BigInt(1), *)
