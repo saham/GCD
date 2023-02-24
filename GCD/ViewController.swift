@@ -4,7 +4,7 @@ class ViewController: UIViewController {
     var workItem: DispatchWorkItem?
     lazy var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateFormat = "HH:mm:ss.SSS "
+        formatter.dateFormat = "HH:mm:ss.SSS"
         return formatter
     }()
 
@@ -15,7 +15,6 @@ class ViewController: UIViewController {
         answerTextView.text = ""
         calculateButton.isEnabled = false
         let newWorkItem = DispatchWorkItem {
-            self.workItem?.cancel()
             result = self.LongRunningFunction()
         }
         let notifyView = DispatchWorkItem {
@@ -36,9 +35,13 @@ class ViewController: UIViewController {
         return (1 ... BigInt(7777)).map { BigInt($0) }.reduce(BigInt(1), *)
     }
     func UpdateUI(result: BigInt) {
-        print(dateFormatter.string(from: Date()))
-        self.calculateButton.isEnabled = true
+        self.workItem?.cancel()
+        self.workItem = nil
+        print("Entered UI Update \(self.dateFormatter.string(from: Date()))")
+        // ISSUE: THE NEXT TWO LINES ARE EXECUTED 4 SECONDS AFTER ABOVE LINE!!
         self.answerTextView.text = "\(result)"
-        print(dateFormatter.string(from: Date()))
+        self.calculateButton.isEnabled = true
+        print("UI Updated \(self.dateFormatter.string(from: Date()))")
+        
     }
 }   
